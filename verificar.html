@@ -376,8 +376,12 @@
             const invitationId = document.getElementById('invitationId').value.trim();
             
             try {
-                const response = await fetch(`${GOOGLE_SCRIPT_URL}?id=${encodeURIComponent(invitationId)}`);
-                const data = await response.json();
+                const response = await fetch(`${GOOGLE_SCRIPT_URL}?id=${encodeURIComponent(invitationId)}`, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+                const text = await response.text();
+                const data = JSON.parse(text);
                 
                 if (data.success && data.invitation) {
                     // Mostrar datos
@@ -412,7 +416,7 @@
                 
             } catch (error) {
                 console.error('Error:', error);
-                errorMessage.textContent = 'Error al verificar. Intentá nuevamente.';
+                errorMessage.textContent = 'Error de conexión. Verificá tu internet e intentá nuevamente.';
                 errorMessage.style.display = 'block';
             } finally {
                 btnCheck.disabled = false;
