@@ -458,6 +458,7 @@ html.js [data-sr] {
   flex-direction: column;
   gap: 22px;
   overflow: hidden;
+  container-type: inline-size;
 }
 .flow-aside .logo-bg {
   position: absolute;
@@ -469,7 +470,8 @@ html.js [data-sr] {
   pointer-events: none;
 }
 .flow-title {
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 3.9rem);
+  /* se ajusta al ancho de la columna: CONFIRMAR / INVITACIÓN nunca se cortan */
+  font-size: min(clamp(2rem, 1.2rem + 3.2vw, 3.9rem), 8.4cqi);
   max-width: 12ch;
 }
 .flow-lead {
