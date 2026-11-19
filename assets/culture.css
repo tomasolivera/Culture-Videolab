@@ -808,9 +808,9 @@ html.intro { overflow: hidden; }
 }
 
 /* ---------- títulos de sección: suben desde una línea ---------- */
-html.js .section-title[data-sr] { transition: clip-path 1.2s var(--ease-expo), transform 1.2s var(--ease-expo), opacity 0.6s; }
-html.js .section-title[data-sr]:not(.in) { clip-path: inset(0 0 100% 0); transform: translateY(0.45em); opacity: 1; }
-html.js .section-title[data-sr].in { clip-path: inset(-10% -5% -15% -5%); }
+/* (sin clip-path en el propio título: el navegador no detecta que entra en pantalla) */
+html.js .section-title[data-sr] { transition: opacity 0.9s var(--ease-out), transform 1.2s var(--ease-expo), letter-spacing 1.4s var(--ease-expo); transition-delay: var(--d, 0ms); }
+html.js .section-title[data-sr]:not(.in) { opacity: 0; transform: translateY(0.6em); letter-spacing: 0.02em; }
 
 /* ---------- pasos del ingreso: la placa entra con corte y después el texto ---------- */
 html.js .step[data-sr] .step-n { transition: clip-path 0.8s var(--ease-expo) calc(var(--d, 0ms) + 120ms); }
@@ -879,7 +879,7 @@ html.pt-in.pt-go::before { transition-delay: 0.1s; }
 @media (prefers-reduced-motion: reduce) {
   .intro-layer { display: none; }
   html::before, html::after { display: none; }
-  html.js .section-title[data-sr]:not(.in) { clip-path: none; transform: none; }
+  html.js .section-title[data-sr]:not(.in) { transform: none; letter-spacing: normal; }
   html.js .step[data-sr]:not(.in) .step-n { clip-path: none; }
 }
 html.js .step[data-sr] {
