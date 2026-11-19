@@ -374,6 +374,14 @@
             .access-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
             .access-info { position: sticky; top: calc(var(--header-h) + 40px); }
         }
+        /* celular y tablet: el flyer va justo abajo del título, antes de la descripción */
+        @media (max-width: 1023px) {
+            .hero-grid { container-type: inline-size; gap: 26px; justify-items: start; }
+            .hero-copy { display: contents; }
+            .hero-logo, .hero .eyebrow, .hero-title { order: 1; }
+            .flyer { order: 2; justify-self: stretch; width: 100%; max-width: 420px; margin: 6px 0; }
+            .hero-desc, .hero-meta, .hero-ctas { order: 3; }
+        }
         @media (min-width: 768px) and (max-width: 1023px) {
             .hero-meta { grid-template-columns: 1fr 1fr; }
             .hero-meta div:first-child { padding-right: 20px; border-right: 1px solid var(--line-pearl); }
