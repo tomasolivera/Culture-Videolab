@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Invitación — CULTURE</title>
     <meta name="theme-color" content="#1A2F1A">
-    <script>document.documentElement.classList.add('js')</script>
+    <script>(function(r){r.classList.add('js');try{if(sessionStorage.getItem('cvPt')){r.classList.add('pt-in');sessionStorage.removeItem('cvPt')}}catch(e){}})(document.documentElement)</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Montserrat:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -85,6 +85,17 @@
         .copy:hover { background: var(--ink); color: var(--pearl); }
         .copy.is-ok { background: var(--accent); color: var(--ink); }
         .btn-send-receipt { margin-top: 30px; }
+        /* escritorio con poca altura (notebooks): todo el pago entra en una pantalla */
+        @media (min-width: 1024px) and (max-height: 900px) {
+            .id-box { padding-bottom: 12px; }
+            .amount { margin-top: 16px; padding: 16px 22px 18px; }
+            .amount .payment-amount-value { font-size: clamp(2.2rem, 5.2svh, 3.8rem); }
+            .details { margin-top: 18px; }
+            .row { min-height: 44px; padding: 6px 0; }
+            .btn-send-receipt { margin-top: 20px; }
+            .payment-note { margin-top: 12px; }
+            .flow-foot { margin-top: 20px; padding-top: 16px; }
+        }
         .btn-send-receipt .ico { width: 22px; height: 22px; }
     </style>
 </head>

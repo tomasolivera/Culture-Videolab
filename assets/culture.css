@@ -572,7 +572,7 @@ html.js [data-sr] {
   .flow-main {
     display: flex;
     align-items: center;
-    padding-block: 5rem;
+    padding-block: clamp(1.75rem, 5svh, 5rem);
   }
 }
 
@@ -669,4 +669,220 @@ html.js [data-sr] {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* =====================================================================
+   MOVIMIENTO — misma lógica que centralize (expo, placas a 60°, grano),
+   con la historia de Culture: el sol sale sobre el horizonte y se abre.
+   ===================================================================== */
+
+/* ---------- intro (solo portada, una vez por sesión) ---------- */
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 990;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.intro-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: var(--bg);
+  overflow: hidden;
+  transition: transform 0.95s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.intro-half::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('grain-strong-512.png') 0 0 / 256px;
+  opacity: 0.35;
+}
+.intro-half.top { top: 0; }
+.intro-half.bot { bottom: 0; }
+/* cada mitad lleva su parte de la escena: al abrirse, el sol se parte en el horizonte */
+.intro-stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+}
+.intro-half.top .intro-stage { top: 0; }
+.intro-half.bot .intro-stage { bottom: 0; }
+.intro-sun {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(118vw, 900px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(193 122 92 / 0.85) 0%, rgb(193 122 92 / 0.32) 26%, rgb(193 122 92 / 0.08) 48%, transparent 66%);
+  transform: scale(0);
+  animation: intro-sun 1.5s var(--ease-expo) 0.15s forwards;
+}
+.intro-logo-wrap {
+  position: relative;
+  width: min(62vw, 360px);
+  clip-path: inset(100% -20% -20% -20%);
+  animation: intro-rise 1.15s var(--ease-expo) 0.35s forwards;
+}
+.intro-logo {
+  width: 100%;
+  color: var(--pearl);
+  transform: translateY(42%);
+  animation: intro-logo 1.15s var(--ease-expo) 0.35s forwards, intro-punch 0.5s var(--ease-out) 1.45s;
+}
+.intro-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  animation: intro-line 0.9s var(--ease-expo) 0.1s forwards;
+}
+.intro-tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + min(18vw, 110px));
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--steel);
+  opacity: 0;
+  animation: intro-tag 0.9s var(--ease-expo) 1.25s forwards;
+}
+.intro-tag b { color: var(--accent); font-weight: 500; }
+.intro-skip {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 22px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel);
+  opacity: 0;
+  animation: intro-tag 0.6s ease 0.6s forwards;
+}
+/* apertura */
+.intro-layer.is-open { pointer-events: none; }
+.intro-layer.is-open .intro-half.top { transform: translateY(-101%); }
+.intro-layer.is-open .intro-half.bot { transform: translateY(101%); }
+.intro-layer.is-open .intro-skip { opacity: 0 !important; transition: opacity 0.2s; }
+
+@keyframes intro-sun { to { transform: scale(1); } }
+@keyframes intro-rise { to { clip-path: inset(-20% -20% -20% -20%); } }
+@keyframes intro-logo { to { transform: translateY(0); } }
+@keyframes intro-punch { 40% { transform: scale(1.07); } }
+@keyframes intro-line { to { transform: scaleX(1); } }
+@keyframes intro-tag { to { opacity: 1; } }
+
+/* mientras corre la intro, la portada espera para animarse al abrirse */
+html.intro .hero .rv,
+html.intro .hero .rv-words .w > span { animation-play-state: paused; }
+html.intro { overflow: hidden; }
+
+/* ---------- portada viva ---------- */
+.hero { --mx: 0; --my: 0; }
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  .hero::before {
+    translate: calc(var(--mx) * -40px) calc(var(--my) * -30px);
+  }
+  .hero .flyer-frame {
+    transform: perspective(1200px) rotateY(calc(var(--mx) * 5deg)) rotateX(calc(var(--my) * -4deg)) translate3d(calc(var(--mx) * 10px), calc(var(--my) * 8px), 0);
+    transition: transform 0.9s var(--ease-out);
+  }
+}
+
+/* ---------- títulos de sección: suben desde una línea ---------- */
+html.js .section-title[data-sr] { transition: clip-path 1.2s var(--ease-expo), transform 1.2s var(--ease-expo), opacity 0.6s; }
+html.js .section-title[data-sr]:not(.in) { clip-path: inset(0 0 100% 0); transform: translateY(0.45em); opacity: 1; }
+html.js .section-title[data-sr].in { clip-path: inset(-10% -5% -15% -5%); }
+
+/* ---------- pasos del ingreso: la placa entra con corte y después el texto ---------- */
+html.js .step[data-sr] .step-n { transition: clip-path 0.8s var(--ease-expo) calc(var(--d, 0ms) + 120ms); }
+html.js .step[data-sr]:not(.in) .step-n { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+html.js .step[data-sr]:not(.in) { transform: translateX(-22px); }
+.step::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-expo);
+}
+@media (hover: hover) {
+  .step:hover::after { transform: scaleX(1); }
+}
+
+/* ---------- line-up: la franja naranja barre el bloque principal ---------- */
+.slot.is-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  pointer-events: none;
+}
+html.js .slot.is-main.in::before { animation: slot-sweep 1.1s var(--ease-expo) 0.25s; }
+@keyframes slot-sweep {
+  0% { transform: scaleX(0); transform-origin: left; }
+  45% { transform: scaleX(1); transform-origin: left; }
+  55% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+/* ---------- transición entre páginas: dos placas a 60° barren la pantalla ---------- */
+html::before,
+html::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -40vh;
+  width: calc(100vw + 80vh);
+  z-index: 980;
+  pointer-events: none;
+  clip-path: polygon(40vh 0, 100% 0, calc(100% - 40vh) 100%, 0 100%);
+  transform: translateX(-101%);
+  visibility: hidden;
+}
+html::before { background: var(--accent); }
+html::after { background: var(--bg) url('grain-strong-512.png') 0 0 / 256px; }
+html.pt-out::before,
+html.pt-out::after { visibility: visible; transform: translateX(0); transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1); }
+html.pt-out::after { transition-delay: 0.08s; }
+html.pt-in::before,
+html.pt-in::after { visibility: visible; transform: translateX(0); }
+html.pt-in.pt-go::before,
+html.pt-in.pt-go::after { transform: translateX(101%); transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1); }
+html.pt-in.pt-go::before { transition-delay: 0.1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-layer { display: none; }
+  html::before, html::after { display: none; }
+  html.js .section-title[data-sr]:not(.in) { clip-path: none; transform: none; }
+  html.js .step[data-sr]:not(.in) .step-n { clip-path: none; }
+}
+html.js .step[data-sr] {
+  transition: opacity 0.9s var(--ease-out), transform 1.1s var(--ease-expo), padding 0.55s var(--ease-expo);
+  transition-delay: var(--d, 0ms), var(--d, 0ms), 0s;
 }

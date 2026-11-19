@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos del Invitado — CULTURE</title>
     <meta name="theme-color" content="#1A2F1A">
-    <script>document.documentElement.classList.add('js')</script>
+    <script>(function(r){r.classList.add('js');try{if(sessionStorage.getItem('cvPt')){r.classList.add('pt-in');sessionStorage.removeItem('cvPt')}}catch(e){}})(document.documentElement)</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Montserrat:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -157,7 +157,7 @@
             } catch (error) {}
 
             setTimeout(() => {
-                window.location.href = `pago.html?id=${invitationId}`;
+                (window.cvGo || function (u) { location.href = u; })(`pago.html?id=${invitationId}`);
             }, 900);
         });
 
