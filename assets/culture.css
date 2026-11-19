@@ -248,7 +248,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   gap: 14px;
   color: var(--pearl);
 }
-.brand .logo { width: 74px; }
+.brand .logo {
+  width: 74px;
+  transition: opacity 0.45s var(--ease-expo), transform 0.45s var(--ease-expo);
+}
+/* en la portada, el logo del header espera a que el logo grande salga de pantalla */
+.hero-logo-on .brand .logo { opacity: 0; transform: translateY(-6px); }
+@media (max-width: 479px) {
+  .brand .logo { width: 64px; }
+}
 .brand-tag {
   display: none;
   padding-left: 14px;
@@ -571,17 +579,44 @@ html.js [data-sr] {
 /* ---------- pie ---------- */
 .site-footer {
   border-top: 1px solid var(--line);
-  padding: 28px 0 34px;
+  padding: 48px 0 40px;
   color: var(--steel);
 }
 .site-footer .container {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
 }
-.site-footer .logo { width: 64px; color: var(--pearl); }
+.site-footer .logo { width: 84px; color: var(--pearl); }
+/* el crédito queda aparte, separado por una línea */
+.site-footer .credit {
+  align-self: stretch;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 768px) {
+  .site-footer { padding: 40px 0; }
+  .site-footer .container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+  .site-footer .logo { width: 72px; }
+  .site-footer .credit {
+    align-self: auto;
+    justify-content: flex-start;
+    margin-top: 0;
+    padding: 0 0 0 28px;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  /* la frase del medio se centra entre logo y crédito */
+  .site-footer .container > .mono-xs { margin-inline: auto; }
+}
 
 /* crédito del estudio */
 .credit {
