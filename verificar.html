@@ -159,9 +159,6 @@
     <script src="assets/culture.js" defer></script>
 
     <script>
-        // URL del Google Apps Script
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzzDvVpREeMIozrq07Jz4HFaA8-BkIDHqrLFKrZS8RDfdoRE6M8Vx1u5Bd2-lHBpGrZA/exec';
-
         document.getElementById('statusForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -178,12 +175,10 @@
             const invitationId = document.getElementById('invitationId').value.trim();
 
             try {
-                const response = await fetch(`${GOOGLE_SCRIPT_URL}?id=${encodeURIComponent(invitationId)}`, {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                const text = await response.text();
-                const data = JSON.parse(text);
+                await new Promise((resolve) => setTimeout(resolve, 700));
+                const invitaciones = JSON.parse(localStorage.getItem('cvInvitaciones') || '{}');
+                const encontrada = invitaciones[invitationId];
+                const data = encontrada ? { success: true, invitation: encontrada } : { success: false };
 
                 if (data.success && data.invitation) {
                     // Mostrar datos
