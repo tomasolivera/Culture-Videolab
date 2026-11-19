@@ -886,3 +886,12 @@ html.js .step[data-sr] {
   transition: opacity 0.9s var(--ease-out), transform 1.1s var(--ease-expo), padding 0.55s var(--ease-expo);
   transition-delay: var(--d, 0ms), var(--d, 0ms), 0s;
 }
+
+/* hasta que la intro está lista, la portada queda tapada (sin destello al cargar) */
+html.intro:not(.intro-ready) body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 989;
+  background: var(--bg);
+}

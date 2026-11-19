@@ -86,6 +86,7 @@
       '<div class="intro-half bot">' + scene + '</div>' +
       '<span class="intro-skip">Saltar intro</span>';
     document.body.appendChild(layer);
+    root.classList.add('intro-ready');
 
     var done = false;
     var open = function () {
