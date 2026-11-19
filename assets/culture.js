@@ -77,8 +77,8 @@
     var scene =
       '<div class="intro-stage">' +
         '<div class="intro-sun"></div>' +
-        '<div class="intro-horizon"></div>' +
         '<div class="intro-logo-wrap"><span class="logo intro-logo"></span></div>' +
+        '<div class="intro-bar"></div>' +
         '<div class="intro-tag">Video <b>·</b> Experience</div>' +
       '</div>';
     layer.innerHTML =

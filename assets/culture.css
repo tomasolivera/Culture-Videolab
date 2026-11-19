@@ -895,3 +895,29 @@ html.intro:not(.intro-ready) body::before {
   z-index: 989;
   background: var(--bg);
 }
+
+/* ---------- intro: la línea del logo (debajo del sol) es la que abre el sitio ---------- */
+.intro-stage { --lw: min(62vw, 360px); }
+.intro-logo-wrap {
+  width: var(--lw);
+  /* la línea del logo está al 52,8 % de su alto: se sube para que caiga justo en el corte */
+  translate: 0 -5.4%;
+}
+.intro-horizon { display: none; }
+.intro-half.top { height: 50%; }
+.intro-half.bot { height: calc(50% + 1px); }
+.intro-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--lw) * 0.333);
+  height: max(2px, calc(var(--lw) * 0.009));
+  translate: calc(-50% - var(--lw) * 0.0075) -50%;
+  background: var(--pearl);
+  opacity: 0;
+  animation: intro-bar 0.6s var(--ease-expo) 1.75s forwards;
+}
+@keyframes intro-bar {
+  0% { opacity: 1; }
+  100% { opacity: 1; width: 112vw; }
+}
