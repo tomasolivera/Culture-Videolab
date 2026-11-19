@@ -305,6 +305,43 @@
             line-height: 1.3;
         }
 
+        /* pasos del ingreso */
+        .access-lead { color: var(--soft); font-size: var(--fs-lead); line-height: 1.5; }
+        .steps-flow { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line-pearl); }
+        .step {
+            position: relative;
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--line-pearl);
+            transition: padding 0.55s var(--ease-expo);
+        }
+        .step-n {
+            --h: 30px;
+            display: inline-flex;
+            align-items: center;
+            height: var(--h);
+            width: max-content;
+            padding: 0 calc(var(--h) * 0.577 + 8px) 0 10px;
+            background: var(--accent);
+            color: var(--ink);
+            font-size: 0.8rem;
+            clip-path: polygon(0 0, 100% 0, calc(100% - var(--h) * 0.577) 100%, 0 100%);
+        }
+        .step h3 {
+            font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem);
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+        .step p { color: var(--soft); font-size: 0.98rem; line-height: 1.5; }
+        @media (hover: hover) {
+            .step:hover { padding-left: 10px; }
+        }
+        .access-map { justify-self: start; color: var(--pearl); }
+
         .access-card {
             --cut: 56px;
             padding: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
@@ -435,7 +472,7 @@
                     </dl>
 
                     <div class="hero-ctas rv" style="--d:660ms">
-                        <a class="btn-plate is-light" href="#acceso"><span class="hx"></span><span class="roll"><span>Seleccionar anfitrión</span></span></a>
+                        <a class="btn-plate is-light" href="#acceso"><span class="hx"></span><span class="roll"><span>Pedir mi invitación</span></span></a>
                         <a class="btn-line" href="#lineup">Ver line-up</a>
                     </div>
                 </div>
@@ -511,28 +548,44 @@
                 <div class="access-info">
                     <span class="eyebrow mono-xs" data-sr><span class="hx"></span>Ingreso</span>
                     <h2 class="section-title" data-sr style="--d:80ms">Solo con <span class="hl">invitación</span></h2>
-                    <div class="facts" data-sr style="--d:160ms">
-                        <div class="fact">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <p class="access-lead" data-sr style="--d:120ms">Así es el ingreso, de punta a punta:</p>
+                    <ol class="steps-flow" data-sr style="--d:160ms">
+                        <li class="step">
+                            <span class="step-n mono">01</span>
                             <div>
-                                <h3>Ubicación</h3>
-                                <p>Las calandrias —<br>San Nicolás De Los Arroyos</p>
+                                <h3>Anfitrión</h3>
+                                <p>Elegís quién te invitó.</p>
                             </div>
-                        </div>
-                        <div class="fact">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </li>
+                        <li class="step">
+                            <span class="step-n mono">02</span>
                             <div>
-                                <h3>Ingreso</h3>
-                                <p>Evento privado<br>Solo con invitación</p>
+                                <h3>Tus datos</h3>
+                                <p>Nombre, DNI y WhatsApp.</p>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                        <li class="step">
+                            <span class="step-n mono">03</span>
+                            <div>
+                                <h3>Transferencia</h3>
+                                <p>Pagás y mandás el comprobante por WhatsApp.</p>
+                            </div>
+                        </li>
+                        <li class="step is-last">
+                            <span class="step-n mono">04</span>
+                            <div>
+                                <h3>Tu estado</h3>
+                                <p>Con tu DNI consultás si tu ingreso fue aceptado.</p>
+                            </div>
+                        </li>
+                    </ol>
+                    <a class="btn-line access-map" data-sr style="--d:200ms" href="https://www.google.com/maps/search/?api=1&amp;query=Las+Calandrias+San+Nicol%C3%A1s+de+los+Arroyos" target="_blank" rel="noopener">Cómo llegar — Las Calandrias</a>
                 </div>
 
                 <div class="access-card theme-light host-selector-section" data-sr style="--d:120ms">
                     <span class="eyebrow mono-xs"><span class="hx"></span>Paso 01 — Anfitrión</span>
                     <h3>¿Quién te invitó?</h3>
-                    <p class="host-instruction">El ingreso a este evento será solo con invitación previamente generada por un anfitrión, seleccione el anfitrión por el cual fue invitado para continuar.</p>
+                    <p class="host-instruction">El ingreso es solo con invitación de un anfitrión. Elegí quién te invitó para continuar.</p>
 
                     <label class="field-label mono-xs" for="hostSelect" style="margin-bottom:8px">Anfitrión <span class="req">*</span></label>
                     <div class="host-dropdown-wrapper">
